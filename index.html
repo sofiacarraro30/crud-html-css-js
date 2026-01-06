@@ -10,11 +10,30 @@
 </head>
 <body>
 <div class="container">
-    <h1> CRUD de Usuarios</h1>
+    <h1> Agenda de contactos</h1>
+    <form>
+        <input type="text" id="name" placeholder="Nombre" autocomplete="off" required>
+        <input type="email" id="email" placeholder="Email" autocomplete="off" required>
+        <button id="btn-cancel" type="button">Cancelar</button>
+        <button>Guardar</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+         
+        </tbody>
+    </table>
+
 </div>
 
 
 
-    
+    <script src="./src/app/main.js"></script>
 </body>
 </html
