@@ -5,14 +5,14 @@ const $nameInput = document.getElementById("name")
 const $emailInput = document.getElementById("email")
 const $form = document.querySelector("form")
 const $contactsList = document.querySelector("tbody")
+const $contactId = document.getElementById("contactId")
+const $btnCancel = document.querySelector("#btn-cancel")
 
-let contacts
+let contacts = []
 let contactstoLocalStorage = JSON.parse(localStorage.getItem("contacts"))
 
 if (contactstoLocalStorage !== null) {
     contacts = contactstoLocalStorage
-} else {
-    contacts = []
 }
 
 
@@ -30,8 +30,8 @@ const renderContacts = () => {
         row.innerHTML = `<td> ${contacts[i].name} </td>
         <td> ${contacts[i].email} </td>
         <td>
-        <button>Actualizar</button>
-        <button>Borrar</button>
+        <button class "btn-update" onclick="updateContact(${i})">Actualizar</button>
+        <button class "btn-delete" onclick="deleteContact(${i})">Borrar</button>
         </td>`
         //3 - agregar la fila a la tabla
         $contactsList.appendChild(row)
@@ -45,25 +45,53 @@ const renderContacts = () => {
 
 const sendForm = (event) => {
     event.preventDefault()
-    console.log(event)
-    console.log("El valor de nombre es: ", $nameInput.value)
-    console.log("El valor de email es: ", $emailInput.value)
 
-    //clave, valor
-    const newContact = {
-        name: $nameInput.value,
-        email: $emailInput.value
+    const name = $nameInput.value
+    const email = $emailInput.value
+
+    if (name === "" || email === "") {
+        alert("El contacto debe tener nombre y email")
+        return
     }
 
-    contacts.push(newContact)
-    //pc guarda en tu memoria mi lista de contactos actualizada
-    //setter -> funcion que actualiza
-    const contactsToJson = JSON.stringify(contacts)
-    localStorage.setItem("contacts", contactsToJson)
+    const dataContact = {
+        name: name,
+        email: email
+    }
 
-    console.log(contacts, "<- lista de contactos")
+    if ($contactId.value === "") {
+        contacts.push(dataContact)
+    } else {
+        contacts[$contactId.value] = dataContact
+        $contactId.value = ""
+    }
+
+    localStorage.setItem("contacts", JSON.stringify(contacts))
     $form.reset()
     renderContacts()
+}
+
+
+
+const deleteContact = (index) => {
+    const valid = confirm ("¿Estas seguro que quieres borrar el contacto?")
+    if (valid === true) {
+
+    contacts.splice(index, 1)
+    localStorage.setItem("contacts", JSON.stringify(contacts))
+    renderContacts() } 
+}
+
+const updateContact = (index) => {
+    $nameInput.value = contacts[index].name
+    $emailInput.value = contacts[index].email
+    $contactId.value = index
+    console.log("Actualizando contacto")
+}
+
+const cancelSendForm = () => {
+    $form.reset ()
+    $btnCancel.addEventListener("click", cancelSendForm)
 }
 
 //Evento submit
@@ -71,3 +99,5 @@ const sendForm = (event) => {
 //callback -> funcion que se ejecuta despues de que pasa algo
 $form.addEventListener("submit", sendForm)
 renderContacts()
+
+

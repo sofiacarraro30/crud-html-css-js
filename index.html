@@ -12,8 +12,9 @@
 <div class="container">
     <h1> Agenda de contactos</h1>
     <form>
-        <input type="text" id="name" placeholder="Nombre" autocomplete="off" required>
-        <input type="email" id="email" placeholder="Email" autocomplete="off" required>
+        <input type="text" id="name" placeholder="Nombre" autocomplete="off">
+        <input type="email" id="email" placeholder="Email" autocomplete="off">
+        <input type hidden="text" id="contactId">
         <button id="btn-cancel" type="button">Cancelar</button>
         <button>Guardar</button>
     </form>
@@ -26,11 +27,6 @@
             </tr>
         </thead>
         <tbody>
-        <td></td>
-        <td></td>
-        <td>
-
-        </td>
         </tbody>
     </table>
 
